@@ -87,13 +87,10 @@ export default function FusionSection() {
           {/* Left Content */}
           <div>
             <h2 className="fusion-text font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl lg:text-5xl">
-              Complexity Simplified through Fusion
+              Complejidad Simplificada mediante la Fusión
             </h2>
             <p className="fusion-text mt-6 max-w-lg font-sans text-base leading-relaxed text-on-surface-muted">
-              The essence of &quot;Gattai&quot; lies in the seamless integration of
-              fragmented services. We specialize in unifying UI,
-              Cloud Infrastructure, and legacy core systems into a singular,
-              high-velocity digital product.
+              La esencia de &quot;Gattai&quot; reside en la integración fluida de servicios fragmentados. Nos especializamos en unificar UI, infraestructura en la nube y sistemas heredados en un único producto digital de alta velocidad.
             </p>
           </div>
 

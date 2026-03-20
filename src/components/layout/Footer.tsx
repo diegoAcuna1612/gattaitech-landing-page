@@ -1,29 +1,29 @@
 const footerColumns = [
   {
-    title: 'Services',
+    title: 'Servicios',
     links: [
-      { label: 'Custom Web Apps', href: '#' },
-      { label: 'AI & Machine Learning', href: '#' },
-      { label: 'Cloud Architecture', href: '#' },
-      { label: 'Enterprise Platforms', href: '#' },
+      { label: 'Apps Web a Medida', href: '#' },
+      { label: 'IA y Machine Learning', href: '#' },
+      { label: 'Arquitectura Cloud', href: '#' },
+      { label: 'Plataformas Empresariales', href: '#' },
     ],
   },
   {
-    title: 'Company',
+    title: 'Empresa',
     links: [
-      { label: 'About Us', href: '#' },
-      { label: 'Case Studies', href: '#case-studies' },
-      { label: 'Careers', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'Sobre Nosotros', href: '#' },
+      { label: 'Casos de Éxito', href: '#case-studies' },
+      { label: 'Carreras', href: '#' },
+      { label: 'Contacto', href: '#' },
     ],
   },
   {
-    title: 'Resources',
+    title: 'Recursos',
     links: [
       { label: 'Blog', href: '#' },
-      { label: 'Documentation', href: '#' },
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: 'Documentación', href: '#' },
+      { label: 'Política de Privacidad', href: '#' },
+      { label: 'Términos de Servicio', href: '#' },
     ],
   },
 ];
@@ -40,8 +40,7 @@ export default function Footer() {
               GattaiTech
             </span>
             <p className="mt-4 max-w-xs font-sans text-sm leading-relaxed text-on-surface-muted">
-              Fusing vision with precision engineering to deliver transformative
-              digital experiences for global enterprises.
+              Fusionando visión con ingeniería de precisión para ofrecer experiencias digitales transformadoras a empresas globales.
             </p>
           </div>
 
@@ -70,20 +69,20 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-outline-variant/15 pt-8 md:flex-row">
           <p className="font-sans text-xs text-on-surface-muted">
-            © 2025 GattaiTech. All rights reserved.
+            © 2025 GattaiTech. Todos los derechos reservados.
           </p>
           <div className="flex gap-6">
             <a
               href="#"
               className="font-sans text-xs text-on-surface-muted transition-colors duration-200 hover:text-primary"
             >
-              Privacy Policy
+              Política de Privacidad
             </a>
             <a
               href="#"
               className="font-sans text-xs text-on-surface-muted transition-colors duration-200 hover:text-primary"
             >
-              Terms of Service
+              Términos de Servicio
             </a>
           </div>
         </div>

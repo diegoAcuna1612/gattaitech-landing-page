@@ -7,22 +7,22 @@ const caseStudies = [
   {
     title: 'Global Alpha Analytics',
     metric: '+80%',
-    metricLabel: 'Performance Increase',
-    description: 'Real-time data visualization platform for enterprise analytics.',
+    metricLabel: 'Aumento de Rendimiento',
+    description: 'Plataforma de visualización de datos en tiempo real para analítica empresarial.',
     gradient: 'from-primary-container/20 to-surface',
   },
   {
     title: 'Gen Stream Marketplace',
     metric: '2.5M+',
-    metricLabel: 'Users Onboarded',
-    description: 'High-throughput marketplace for digital content distribution.',
+    metricLabel: 'Usuarios Registrados',
+    description: 'Marketplace de alto rendimiento para la distribución de contenido digital.',
     gradient: 'from-secondary/20 to-surface',
   },
   {
-    title: 'Unified Backend Platform',
+    title: 'Plataforma de Backend Unificada',
     metric: '99.9%',
-    metricLabel: 'Uptime Achieved',
-    description: 'Enterprise-grade microservices infrastructure for global operations.',
+    metricLabel: 'Tiempo de Actividad',
+    description: 'Infraestructura de microservicios de nivel empresarial para operaciones globales.',
     gradient: 'from-primary/20 to-surface',
   },
 ];
@@ -80,14 +80,13 @@ export default function SuccessSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="mb-6">
-          <SectionLabel className="success-text mb-4 block">Case Studies</SectionLabel>
+          <SectionLabel className="success-text mb-4 block">Casos de Éxito</SectionLabel>
           <h2 className="success-text font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl lg:text-5xl">
-            Integrated Success
+            Éxito Integrado
           </h2>
         </div>
         <p className="success-text mb-16 max-w-2xl font-sans text-base leading-relaxed text-on-surface-muted">
-          Transformative results for industry leaders through integrated
-          AI systems and cloud-native architectures.
+          Resultados transformadores para líderes de la industria mediante sistemas de IA integrados y arquitecturas nativas de la nube.
         </p>
 
         {/* Case Study Cards */}

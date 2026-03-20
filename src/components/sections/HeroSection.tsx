@@ -104,28 +104,26 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-16 lg:grid-cols-2 lg:px-8 lg:py-24">
         {/* Left Content */}
         <div className="flex flex-col gap-6">
-          <SectionLabel className="hero-label">The Kinetic Architect</SectionLabel>
+          <SectionLabel className="hero-label">Arquitectura Cinética</SectionLabel>
 
           <h1 className="hero-heading font-serif text-4xl font-bold leading-[1.1] tracking-tight text-on-surface sm:text-5xl lg:text-6xl">
-            GattaiTech: Fusing Vision into{' '}
+            GattaiTech: Fusionando Visiones en Software a Medida{' '}
             <span className="bg-gradient-to-r from-primary-container to-primary bg-clip-text text-transparent italic">
-              Integrated
-            </span>{' '}
-            Custom Software.
+              Integrado
+            </span>
+            .
           </h1>
 
           <p className="hero-description max-w-lg font-sans text-base leading-relaxed text-on-surface-muted sm:text-lg">
-            We collaborate with global enterprises to build high-performance,
-            intelligent applications that seamlessly unite complex functionality
-            and premium user experience.
+            Colaboramos con empresas globales para construir aplicaciones inteligentes de alto rendimiento que unen a la perfección una funcionalidad compleja con una experiencia de usuario premium.
           </p>
 
           <div className="mt-2 flex flex-wrap gap-4">
             <Button variant="energy" href="#properties" className="hero-cta">
-              Explore Services
+              Explorar Servicios
             </Button>
             <Button variant="outline" href="#insights" className="hero-cta">
-              Talk to an Expert
+              Hablar con un Experto
             </Button>
           </div>
         </div>

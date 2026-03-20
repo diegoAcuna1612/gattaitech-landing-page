@@ -35,17 +35,16 @@ export default function CTASection() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center lg:px-8">
         <h2 className="cta-element font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl lg:text-5xl">
-          Ready to Fuse Your Vision?
+          ¿Listo para Fusionar tu Visión?
         </h2>
 
         <p className="cta-element mx-auto mt-6 max-w-xl font-sans text-base leading-relaxed text-on-surface-muted">
-          Let's engineer the high-performance digital future. If you're ready,
-          our architects are ready.
+          Diseñemos el futuro digital de alto rendimiento. Si estás listo, nuestros arquitectos están listos.
         </p>
 
         <div className="cta-element mt-10">
           <Button variant="energy" className="px-8 py-4 text-base">
-            Initiate Project Consult
+            Iniciar Consulta de Proyecto
           </Button>
         </div>
       </div>

@@ -83,9 +83,9 @@ export default function BlueprintSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="blueprint-header mb-16 text-center">
-          <SectionLabel className="mb-4 block">Our Methodology</SectionLabel>
+          <SectionLabel className="mb-4 block">Nuestra Metodología</SectionLabel>
           <h2 className="font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl">
-            The Kinetic Blueprint
+            El Plano Cinético
           </h2>
         </div>
 

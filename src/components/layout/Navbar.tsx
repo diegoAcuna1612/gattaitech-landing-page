@@ -38,7 +38,7 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <div className="hidden md:block">
           <Button variant="energy" className="px-5 py-2 text-xs">
-            Get Started
+            Comenzar
           </Button>
         </div>
 
@@ -46,7 +46,7 @@ export default function Navbar() {
         <button
           className="flex items-center justify-center md:hidden text-on-surface"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+          aria-label="Alternar menú"
         >
           <svg
             className="h-6 w-6"
@@ -89,7 +89,7 @@ export default function Navbar() {
             ))}
             <li className="pt-2">
               <Button variant="energy" className="w-full py-2 text-xs">
-                Get Started
+                Comenzar
               </Button>
             </li>
           </ul>
