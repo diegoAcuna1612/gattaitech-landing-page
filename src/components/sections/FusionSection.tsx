@@ -85,7 +85,7 @@ export default function FusionSection() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           {/* Left Content */}
-          <div>
+          <div className="lg:order-last">
             <h2 className="fusion-text font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl lg:text-5xl">
               Complejidad Simplificada mediante la Fusión
             </h2>
@@ -95,7 +95,7 @@ export default function FusionSection() {
           </div>
 
           {/* Right — Fusion Reactor Visual */}
-          <div className="flex items-center justify-center lg:justify-end">
+          <div className="flex items-center justify-center lg:order-first lg:justify-start">
             <div className="fusion-visual relative flex h-[340px] w-[340px] items-center justify-center sm:h-[400px] sm:w-[400px] lg:h-[460px] lg:w-[460px]">
 
               {/* Anillos concéntricos giratorios — representan la "fusión" */}

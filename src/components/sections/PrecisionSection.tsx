@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import SectionLabel from '../ui/SectionLabel';
@@ -11,42 +11,52 @@ const moons = [
   {
     id: 'producto',
     label: 'Ingeniería de Producto',
-    top: '2%',
+    description: 'Diseño y desarrollo de productos digitales escalables con arquitectura modular y experiencia de usuario excepcional.',
+    top: '0%',
     left: '50%',
     translate: '-50%',
     delay: 0,
+    popupSide: 'right' as const,
   },
   {
     id: 'ia',
     label: 'Sistemas Cognitivos (IA)',
-    top: '28%',
-    left: '90%',
-    translate: '-50%',
+    description: 'Integración de modelos de inteligencia artificial para automatización inteligente, análisis predictivo y sistemas adaptativos.',
+    top: '25%',
+    left: '95%',
+    translate: '-100%',
     delay: 0.12,
+    popupSide: 'left' as const,
   },
   {
     id: 'cloud',
     label: 'Infraestructura Resiliente',
-    top: '72%',
-    left: '82%',
-    translate: '-50%',
+    description: 'Arquitectura cloud-native con DevSecOps, alta disponibilidad y pipelines de despliegue continuo.',
+    top: '70%',
+    left: '85%',
+    translate: '-100%',
     delay: 0.24,
+    popupSide: 'left' as const,
   },
   {
     id: 'web3',
     label: 'Tecnologías Emergentes',
-    top: '72%',
-    left: '18%',
-    translate: '-50%',
+    description: 'Exploración y aplicación de blockchain, realidad aumentada y protocolos descentralizados.',
+    top: '70%',
+    left: '15%',
+    translate: '0%',
     delay: 0.36,
+    popupSide: 'right' as const,
   },
   {
     id: 'consultoria',
     label: 'Consultoría Estratégica',
-    top: '28%',
-    left: '10%',
-    translate: '-50%',
+    description: 'Roadmaps tecnológicos alineados con objetivos de negocio, desde diagnóstico hasta implementación.',
+    top: '25%',
+    left: '5%',
+    translate: '0%',
     delay: 0.48,
+    popupSide: 'right' as const,
   },
 ];
 
@@ -305,14 +315,97 @@ const visualComponents: Record<string, React.FC> = {
 };
 
 /* ─────────────────────────────────────────────────────────
+   MoonCard — individual domain card with GSAP hover popup
+   ───────────────────────────────────────────────────────── */
+function MoonCard({ moon }: { moon: typeof moons[number] }) {
+  const Visual = visualComponents[moon.id];
+  const popupRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
+
+  const isLeft = moon.popupSide === 'left';
+  const xOffset = isLeft ? 15 : -15;
+
+  const handleEnter = useCallback(() => {
+    if (tweenRef.current) tweenRef.current.kill();
+    tweenRef.current = gsap.to(popupRef.current, {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.3,
+      ease: 'power2.out',
+    });
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    if (tweenRef.current) tweenRef.current.kill();
+    tweenRef.current = gsap.to(popupRef.current, {
+      opacity: 0,
+      x: xOffset,
+      scale: 0.95,
+      duration: 0.2,
+      ease: 'power2.in',
+    });
+  }, [xOffset]);
+
+  return (
+    <div
+      className="domain-moon relative"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <div
+        className="group flex flex-col items-center"
+        style={{
+          animation: `float 5s ease-in-out infinite ${moon.delay + 1}s`,
+        }}
+      >
+        {/* Moon visual container */}
+        <div className="relative h-[130px] w-[150px] rounded-lg bg-surface/60 p-2 ghost-border transition-all duration-500 group-hover:scale-[1.08] group-hover:bg-surface-high/80 group-hover:shadow-[0_0_30px_rgba(63,229,108,0.12)]">
+          {/* Subtle inner glow on hover */}
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-primary/0 to-primary/0 transition-all duration-500 group-hover:from-primary/5 group-hover:to-transparent" />
+          <div className="relative h-full w-full">
+            <Visual />
+          </div>
+        </div>
+
+        {/* Label */}
+        <span className="mt-3 max-w-[160px] text-center font-mono text-[11px] font-semibold uppercase leading-tight tracking-[0.12em] text-on-surface-muted transition-colors duration-300 group-hover:text-primary">
+          {moon.label}
+        </span>
+      </div>
+
+      {/* ── Hover Popup ── */}
+      <div
+        ref={popupRef}
+        className="pointer-events-none absolute top-1/2 z-20 w-[220px] -translate-y-1/2 rounded-lg bg-surface-high/95 p-4 shadow-ambient ghost-border backdrop-blur-sm"
+        style={{
+          ...(isLeft
+            ? { right: '100%', marginRight: 12 }
+            : { left: '100%', marginLeft: 12 }),
+          opacity: 0,
+          transform: `translateY(-50%) translateX(${xOffset}px) scale(0.95)`,
+        }}
+      >
+        <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-primary mb-2">
+          {moon.label}
+        </p>
+        <p className="text-xs leading-relaxed text-on-surface-muted">
+          {moon.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
    Pentagon connection line endpoints (center = 350,350)
    ───────────────────────────────────────────────────────── */
 const connectionEndpoints = [
-  { x: 350, y: 80 },   // top (Producto)
-  { x: 600, y: 245 },  // top-right (IA)
-  { x: 535, y: 510 },  // bottom-right (Cloud)
-  { x: 165, y: 510 },  // bottom-left (Web3)
-  { x: 100, y: 245 },  // top-left (Consultoría)
+  { x: 350, y: 65 },   // top (Producto) — centered at 50%
+  { x: 590, y: 240 },  // top-right (IA) — right-aligned at 95%
+  { x: 520, y: 555 },  // bottom-right (Cloud) — right-aligned at 85%
+  { x: 180, y: 555 },  // bottom-left (Web3) — left-aligned at 15%
+  { x: 110, y: 240 },  // top-left (Consultoría) — left-aligned at 5%
 ];
 
 export default function PrecisionSection() {
@@ -320,8 +413,8 @@ export default function PrecisionSection() {
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
+   // 1. Animaciones COMUNES (Header) - Para todas las pantallas
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Header reveal
       gsap.from('.precision-header', {
         y: 30,
         opacity: 0,
@@ -333,51 +426,59 @@ export default function PrecisionSection() {
           toggleActions: 'play none none none',
         },
       });
+    });
 
-      // Domain moons scale-in from center
-      gsap.from('.domain-moon', {
+    // 2. Animaciones DESKTOP (Pantallas >= 1024px)
+    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      // Solo apuntamos a las lunas dentro de orbital-container
+      gsap.from('.orbital-container .domain-moon', {
         scale: 0,
         opacity: 0,
         stagger: 0.12,
         duration: 0.7,
         ease: 'back.out(1.4)',
-        clearProps: 'all',
+        clearProps: 'scale,opacity',
         scrollTrigger: {
-          trigger: '.orbital-container',
-          start: 'top 80%',
+          trigger: containerRef.current,
+          start: 'top 70%',
           toggleActions: 'play none none none',
         },
       });
 
-      // Connection lines draw in
       gsap.from('.orbital-connection', {
-        scaleY: 0,
-        scaleX: 0,
-        transformOrigin: 'center center',
-        stagger: 0.08,
-        duration: 0.8,
-        ease: 'power3.out',
+        scaleY: 0, scaleX: 0, transformOrigin: 'center center',
+        stagger: 0.08, duration: 0.8, ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.orbital-container',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
+          trigger: '.orbital-container', start: 'top 80%', toggleActions: 'play none none none',
         },
       });
 
-      // Central core pulse in
       gsap.from('.orbital-core', {
+        scale: 0, opacity: 0, duration: 1, ease: 'elastic.out(1, 0.5)', delay: 0.5,
+        scrollTrigger: {
+          trigger: '.orbital-container', start: 'top 80%', toggleActions: 'play none none none',
+        },
+      });
+    });
+
+    // 3. Animaciones MOBILE (Pantallas < 1024px)
+    mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+      // Solo apuntamos a las lunas dentro del mobile-container
+      gsap.from('.mobile-container .domain-moon', {
         scale: 0,
         opacity: 0,
-        duration: 1,
-        ease: 'elastic.out(1, 0.5)',
-        delay: 0.5,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: 'back.out(1.4)',
+        clearProps: 'scale,opacity',
         scrollTrigger: {
-          trigger: '.orbital-container',
-          start: 'top 80%',
+          trigger: containerRef.current,
+          start: 'top 70%',
           toggleActions: 'play none none none',
         },
       });
     });
+
   }, { scope: containerRef });
 
   return (
@@ -426,38 +527,23 @@ export default function PrecisionSection() {
           </div>
 
           {/* Domain Moons */}
-          {moons.map((moon) => {
-            const Visual = visualComponents[moon.id];
-            return (
-              <div
-                key={moon.id}
-                className="domain-moon group absolute flex flex-col items-center"
-                style={{
-                  top: moon.top,
-                  left: moon.left,
-                  transform: `translateX(${moon.translate})`,
-                  animation: `float 5s ease-in-out infinite ${moon.delay + 1}s`,
-                }}
-              >
-                {/* Moon visual container */}
-                <div className="relative h-[130px] w-[150px] rounded-lg bg-surface/60 p-2 ghost-border transition-all duration-500 group-hover:scale-[1.08] group-hover:bg-surface-high/80 group-hover:shadow-[0_0_30px_rgba(63,229,108,0.12)]">
-                  {/* Subtle inner glow on hover */}
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-primary/0 to-primary/0 transition-all duration-500 group-hover:from-primary/5 group-hover:to-transparent" />
-                  <div className="relative h-full w-full">
-                    <Visual />
-                  </div>
-                </div>
-                {/* Label — Manrope (font-mono), wider tracking */}
-                <span className="mt-3 max-w-[160px] text-center font-mono text-[11px] font-semibold uppercase leading-tight tracking-[0.12em] text-on-surface-muted transition-colors duration-300 group-hover:text-primary">
-                  {moon.label}
-                </span>
-              </div>
-            );
-          })}
+          {moons.map((moon) => (
+            <div
+              key={moon.id}
+              className="absolute"
+              style={{
+                top: moon.top,
+                left: moon.left,
+                transform: `translateX(${moon.translate})`,
+              }}
+            >
+              <MoonCard moon={moon} />
+            </div>
+          ))}
         </div>
 
         {/* ═══ MOBILE STACK LAYOUT ═══ */}
-        <div className="flex flex-col gap-6 lg:hidden">
+        <div className="mobile-container flex flex-col gap-6 lg:hidden">
           {moons.map((moon) => {
             const Visual = visualComponents[moon.id];
             return (
@@ -468,9 +554,14 @@ export default function PrecisionSection() {
                 <div className="h-20 w-24 shrink-0">
                   <Visual />
                 </div>
-                <span className="font-mono text-xs font-semibold uppercase tracking-[0.1em] text-on-surface-muted">
-                  {moon.label}
-                </span>
+                <div>
+                  <span className="block font-mono text-xs font-semibold uppercase tracking-[0.1em] text-on-surface-muted">
+                    {moon.label}
+                  </span>
+                  <p className="mt-1 text-xs leading-relaxed text-on-surface-muted/70">
+                    {moon.description}
+                  </p>
+                </div>
               </div>
             );
           })}

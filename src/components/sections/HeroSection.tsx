@@ -107,11 +107,12 @@ export default function HeroSection() {
           <SectionLabel className="hero-label">Arquitectura Cinética</SectionLabel>
 
           <h1 className="hero-heading font-serif text-4xl font-bold leading-[1.1] tracking-tight text-on-surface sm:text-5xl lg:text-6xl">
-            GattaiTech: Fusionando Visiones en Software a Medida{' '}
+            GattaiTech: {' '}
             <span className="bg-gradient-to-r from-primary-container to-primary bg-clip-text text-transparent italic">
-              Integrado
+            Fusionando{' '}
             </span>
-            .
+            Visiones en Software a Medida{' '}
+            Integrado.
           </h1>
 
           <p className="hero-description max-w-lg font-sans text-base leading-relaxed text-on-surface-muted sm:text-lg">
