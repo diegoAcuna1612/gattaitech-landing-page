@@ -49,11 +49,12 @@ export default function App() {
 
       <main>
         <HeroSection />
-        <FusionSection />
+        {/* <FusionSection />*/}
         <PrecisionSection />
         <BlueprintSection />
         <SuccessSection />
         <CTASection />
+
       </main>
 
       <Footer />
