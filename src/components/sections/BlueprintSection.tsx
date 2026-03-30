@@ -1,118 +1,281 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionLabel from '../ui/SectionLabel';
 
-const steps = [
+gsap.registerPlugin(ScrollTrigger);
+
+const methodologySteps = [
   {
-    number: '01',
-    title: 'Sprint Cero: Fusión',
-    description: 'Definimos el MVP y priorizamos el backlog para alinear visión y negocio.',
+    num: '01',
+    id: 'step-1',
+    title: 'Descubrimiento y Valor',
+    desc: 'Identificamos el problema real del usuario y definimos un MVP centrado en entregar el máximo ROI desde el día uno.',
+    comment: '// STEP 01: VALUE DISCOVERY & MVP',
+    code: `async defineMVP(vision: ProductVision): Promise<ValueStream> {
+  const userNeeds = await this.research.discover(vision);
+  const productBacklog = this.agileCoach.prioritizeByValue(userNeeds);
+  
+  return new ValueStream({
+    focus: 'Core User Problem',
+    deliverables: productBacklog.getHighestROI(),
+    aligned: true
+  });
+}`
   },
   {
-    number: '02',
-    title: 'Arquitectura Adaptativa',
-    description: 'Diseñamos planos técnicos flexibles y prototipos rápidos para validar el núcleo.',
+    num: '02',
+    id: 'step-2',
+    title: 'Arquitectura Evolutiva',
+    desc: 'Construimos bases técnicas que abrazan el cambio. Diseñamos para pivotar rápido sin acumular deuda técnica.',
+    comment: '// STEP 02: EVOLUTIONARY ARCHITECTURE',
+    code: `class CoreEngine implements IAdaptable {
+  @Inject(CloudProvider)
+  private readonly infrastructure: CloudProvider;
+
+  bootstrap(stream: ValueStream): SystemBlueprint {
+    return this.infrastructure.provision({
+      modularity: 'High Decoupling',
+      deployment: 'Serverless',
+      agility: 'Built to Pivot'
+    });
+  }
+}`
   },
   {
-    number: '03',
-    title: 'Desarrollo Iterativo',
-    description: 'Entregamos software funcional en ciclos cortos para una evolución constante.',
+    num: '03',
+    id: 'step-3',
+    title: 'Entrega Continua de Valor',
+    desc: 'Traducimos historias de usuario en software funcional mediante Sprints, garantizando progreso medible y transparencia.',
+    comment: '// STEP 03: CONTINUOUS VALUE DELIVERY',
+    code: `@Cron(ScrumCadence.EVERY_SPRINT)
+async executeSprint(sprintGoal: SprintCycle) {
+  for (const story of sprintGoal.userStories) {
+    await this.squad
+      .develop(story)
+      .ensureQuality()
+      .meetDefinitionOfDone();
+  }
+  
+  await this.productOwner.inspectAndAdapt(sprintGoal);
+}`
   },
   {
-    number: '04',
-    title: 'CI/CD & Calidad',
-    description: 'Automatizamos pruebas y pipelines para garantizar lanzamientos siempre seguros.',
+    num: '04',
+    id: 'step-4',
+    title: 'Automatización y Confianza',
+    desc: 'Reducimos el time-to-market automatizando pruebas y despliegues. Llevamos el producto a producción sin fricciones.',
+    comment: '// STEP 04: ZERO-FRICTION DEPLOYMENT',
+    code: `pipeline('Gattai-Value-Pipeline')
+  .stage('Continuous Integration', async () => {
+    await jest.run({ coverage: true, failFast: true });
+    await sonarQube.checkQualityGate();
+  })
+  .stage('Continuous Deployment', async () => {
+    await vercel.shipToProduction();
+    slack.notify('🚀 New value delivered to users!');
+  });`
   },
   {
-    number: '05',
-    title: 'Escala y Aprendizaje',
-    description: 'Lanzamos, medimos datos reales e iteramos para maximizar el impacto.',
-  },
+    num: '05',
+    id: 'step-5',
+    title: 'Build, Measure, Learn',
+    desc: 'Lanzamos, analizamos el comportamiento real y usamos esa data para adaptar el backlog y maximizar el impacto.',
+    comment: '// STEP 05: BUILD, MEASURE, LEARN',
+    code: `@OnEvent('increment.released')
+analyzeFeedback(telemetry: UserMetrics) {
+  const insights = this.leanEngine.measure(telemetry);
+
+  if (insights.indicatesPivot()) {
+    this.productBacklog.adaptStrategy(insights);
+  } else {
+    this.growthTeam.scaleSuccessfulFeatures();
+  }
+}`
+  }
 ];
+
+function SyntaxHighlight({ code }: { code: string }) {
+    let highlightedCode = code;
+    highlightedCode = highlightedCode.replace(/\b(async|class|return|new|const|private|readonly|await|for|of|if|else)\b/g, '<span class="text-[#ff7b72]">$1</span>');
+    highlightedCode = highlightedCode.replace(/\b(Promise|Blueprint|CoreEngine|IScaleable|CloudProvider|Architecture|VisionDraft|SprintCycle|AppMetrics)\b/g, '<span class="text-[#f0883e]">$1</span>');
+    highlightedCode = highlightedCode.replace(/(@[A-Za-z_]+)/g, '<span class="text-[#d2a8ff]">$1</span>');
+    highlightedCode = highlightedCode.replace(/('[^']*')/g, '<span class="text-[#a5d6ff]">$1</span>');
+    highlightedCode = highlightedCode.replace(/(\/\/.*)/g, '<span class="text-slate-500">$1</span>');
+    return <span dangerouslySetInnerHTML={{ __html: highlightedCode }} />;
+}
+
 export default function BlueprintSection() {
   const containerRef = useRef<HTMLElement>(null);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const codeScrollRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Header reveal
-      gsap.from('.blueprint-header', {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        clearProps: 'all',
+    
+    // Configuración para Desktop (con Pinning y Timeline vinculada al scroll)
+    mm.add('(min-width: 1024px)', () => {
+      // Limpiamos estilos residuales de móvil
+      gsap.set(cardsRef.current, { clearProps: 'all' });
+
+      const totalScroll = 4000;
+      
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
+          start: 'top top',
+          end: `+=${totalScroll}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        }
       });
 
-      // Steps stagger — Blueprint Reveal: elements "drafted" sequentially
-      gsap.from('.blueprint-step', {
-        y: 40,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.6,
-        clearProps: 'all',
-        scrollTrigger: {
-          trigger: '.blueprint-step',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
+      // Animar el scroll del código hacia arriba
+      tl.to(codeScrollRef.current, {
+        y: () => {
+          if (!editorRef.current || !codeScrollRef.current) return 0;
+          return -(codeScrollRef.current.scrollHeight - editorRef.current.clientHeight * 0.7);
         },
-      });
+        ease: 'none',
+        duration: 100
+      }, 0);
 
-      // Connecting line — draw from left to right
-      gsap.from('.blueprint-line', {
-        scaleX: 0,
-        transformOrigin: 'left center',
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.blueprint-line',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
+      const startTimings = [4, 21, 39, 56, 73];
+      // Sincronizar aparición y desaparición de tarjetas
+      methodologySteps.forEach((_, index) => {
+        const card = cardsRef.current[index];
+        if (!card) return;
+
+        const startPhase = startTimings[index]; 
+        // El final de una tarjeta es el inicio de la siguiente (o 100 si es la última)
+        const endPhase = index < methodologySteps.length - 1 ? startTimings[index + 1] : 100;
+        
+        gsap.set(card, { autoAlpha: 0, filter: 'blur(12px)', scale: 0.95 });
+
+        // Animación de Entrada
+        tl.to(card, {
+          autoAlpha: 1,
+          filter: 'blur(0px)',
+          scale: 1,
+          duration: 4,
+          ease: 'power2.out',
+        }, startPhase); // <-- Entra en el tiempo definido en el array
+        
+        // Animación de Salida (excepto la última tarjeta)
+        if (index < methodologySteps.length - 1) {
+            tl.to(card, {
+              autoAlpha: 0,
+              filter: 'blur(12px)',
+              scale: 1.05,
+              duration: 4,
+              ease: 'power2.in',
+            }, endPhase - 4); // <-- Sale un poquito antes de que entre la siguiente
+        }
       });
+    });
+
+    // Configuración para Mobile y Tablets (Aparición secuencial natural en flujo)
+    mm.add('(max-width: 1023px)', () => {
+     // Limpiamos estilos residuales de escritorio para evitar colisiones
+     gsap.set(cardsRef.current, { clearProps: 'all' });
+     gsap.set(codeScrollRef.current, { clearProps: 'all' });
+
+     cardsRef.current.forEach((card) => {
+        if (!card) return;
+        gsap.fromTo(card, {
+            autoAlpha: 0,
+            y: 40,
+            filter: 'blur(8px)'
+        }, {
+            autoAlpha: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+     });
     });
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="bg-surface-low py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div className="blueprint-header mb-16 text-center">
-          <SectionLabel className="mb-4 block">Nuestra Metodología</SectionLabel>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-on-surface sm:text-4xl">
-            El Plano Cinético
-          </h2>
-        </div>
+    <section ref={containerRef} className="relative min-h-screen overflow-hidden bg-[#0d1117] font-sans text-slate-300">
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
-        {/* Steps */}
-        <div className="relative">
-          {/* Connecting line (desktop) */}
-          <div className="blueprint-line absolute top-6 right-0 left-0 hidden h-px bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent lg:block" />
-
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
-            {steps.map((step) => (
-              <div key={step.number} className="blueprint-step relative flex flex-col items-center text-center lg:items-start lg:text-left">
-                {/* Number Badge */}
-                <div className="relative z-10 mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-primary text-sm font-bold text-surface-dim">
-                  {step.number}
-                </div>
-
-                {/* Content */}
-                <h3 className="mb-2 font-sans text-sm font-bold text-on-surface">
-                  {step.title}
-                </h3>
-                <p className="font-sans text-xs leading-relaxed text-on-surface-muted">
-                  {step.description}
-                </p>
+      <div className="relative z-10 mx-auto flex h-full min-h-screen max-w-7xl flex-col px-6 py-20 lg:flex-row lg:px-8 lg:py-0">
+        
+        {/* LADO IZQUIERDO: Editor de Código */}
+       <div className="hidden pointer-events-none absolute inset-0 z-0 items-center justify-center opacity-5 lg:pointer-events-auto lg:relative lg:z-10 lg:flex lg:w-[60%] lg:pr-16 lg:opacity-100">
+          <div ref={editorRef} className="relative mt-8 h-full w-full max-w-2xl overflow-hidden rounded-xl border-none bg-transparent lg:h-[80vh] lg:border-solid lg:border lg:border-slate-700/50 lg:bg-[#161b22] lg:shadow-2xl lg:mt-0">
+            
+            <div className="relative z-30 flex h-12 items-center justify-between border-b border-slate-700/50 bg-[#0d1117] px-4">
+              <div className="flex gap-2">
+                <div className="h-3.5 w-3.5 rounded-full bg-[#ff5f56]"></div>
+                <div className="h-3.5 w-3.5 rounded-full bg-[#ffbd2e]"></div>
+                <div className="h-3.5 w-3.5 rounded-full bg-[#27c93f]"></div>
               </div>
-            ))}
+              <div className="font-mono text-xs text-slate-500">GattaiMethodology.ts</div>
+              <div className="w-14"></div>
+            </div>
+
+            <div className="absolute left-0 right-0 top-1/2 z-20 h-[2px] w-full -translate-y-1/2 bg-green-400 shadow-[0_0_15px_rgba(74,222,128,1)]">
+               <div className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-green-400 blur-[4px]"></div>
+            </div>
+            
+            <div className="pointer-events-none absolute left-0 right-0 top-12 z-10 h-32 bg-gradient-to-b from-[#161b22] to-transparent"></div>
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 h-32 bg-gradient-to-t from-[#161b22] to-transparent"></div>
+
+            <div className="relative h-full w-full font-mono text-sm leading-relaxed tracking-wide sm:text-base">
+                <div ref={codeScrollRef} className="absolute inset-x-0 top-[50%] flex flex-col pb-[100vh]">
+                    <div className="h-[20vh]"></div>
+                    {methodologySteps.map((step, i) => (
+                        <div key={i} className="mb-[40vh] px-8">
+                            <span className="mb-4 inline-block font-bold text-slate-500/80">{step.comment}</span>
+                            <pre className="whitespace-pre-wrap text-[#a5d6ff]">
+                                <SyntaxHighlight code={step.code} />
+                            </pre>
+                        </div>
+                    ))}
+                </div>
+            </div>
           </div>
         </div>
+
+        {/* LADO DERECHO: Tarjetas de Contenido (Metodología) */}
+        <div className="relative z-20 flex h-full w-full flex-col pt-12 lg:min-h-screen lg:w-[40%] lg:justify-center lg:pt-0">
+            <div className="mb-16 text-center lg:mb-12 lg:text-left">
+                <SectionLabel className="mb-4 block text-green-400 !bg-green-400/10">Metodología</SectionLabel>
+                <h2 className="mb-4 font-serif text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                  Código con Propósito
+                </h2>
+                <p className="text-lg text-slate-400">
+                  No solo escribimos software. Iteramos contigo paso a paso para construir productos que tus usuarios realmente necesiten.
+                </p>
+            </div>
+
+            {/* Aquí es donde cambiamos la magia responsiva */}
+            <div className="flex flex-col gap-16 pb-20 lg:relative lg:block lg:h-[400px] lg:w-full lg:pb-0">
+                {methodologySteps.map((step, i) => (
+                    <div 
+                        key={i} 
+                        ref={el => { cardsRef.current[i] = el; }}
+                        // En móvil: flex en columna normal. En Desktop: absolute inset-0
+                        className="relative flex flex-col items-center justify-start text-center lg:absolute lg:inset-0 lg:items-start lg:text-left"
+                    >
+                        <div className="mb-4 font-mono text-6xl font-black text-green-400/20 lg:text-7xl">{step.num}</div>
+                        <h3 className="mb-4 text-2xl font-bold text-white md:text-3xl">{step.title}</h3>
+                        <p className="text-base leading-relaxed text-slate-400 md:text-lg lg:max-w-md">{step.desc}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+        
       </div>
     </section>
   );
