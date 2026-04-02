@@ -120,7 +120,7 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-2 flex flex-wrap gap-4">
-            <Button variant="energy" href="#properties" className="hero-cta">
+            <Button variant="energy" href="#previews" className="hero-cta">
               Explorar Servicios
             </Button>
             <Button variant="outline" href="#insights" className="hero-cta">

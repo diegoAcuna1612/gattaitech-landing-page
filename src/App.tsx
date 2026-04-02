@@ -6,11 +6,11 @@ import { useGSAP } from '@gsap/react'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import HeroSection from './components/sections/HeroSection'
-import FusionSection from './components/sections/FusionSection'
+//import FusionSection from './components/sections/FusionSection'
 import PrecisionSection from './components/sections/PrecisionSection'
 import BlueprintSection from './components/sections/BlueprintSection'
 import SuccessSection from './components/sections/SuccessSection'
-import CTASection from './components/sections/CTASection'
+import ContactSection from './components/sections/ContactSection'
 
 // Global GSAP setup
 gsap.registerPlugin(ScrollTrigger)
@@ -53,7 +53,7 @@ export default function App() {
         <PrecisionSection />
         <BlueprintSection />
         <SuccessSection />
-        <CTASection />
+        <ContactSection />
 
       </main>
 

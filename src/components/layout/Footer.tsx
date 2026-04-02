@@ -1,29 +1,12 @@
 const footerColumns = [
   {
-    title: 'Servicios',
+    title: 'Navegación',
     links: [
-      { label: 'Apps Web a Medida', href: '#' },
-      { label: 'IA y Machine Learning', href: '#' },
-      { label: 'Arquitectura Cloud', href: '#' },
-      { label: 'Plataformas Empresariales', href: '#' },
-    ],
-  },
-  {
-    title: 'Empresa',
-    links: [
-      { label: 'Sobre Nosotros', href: '#' },
+      { label: 'Inicio', href: '#hero' },
+      { label: 'Soluciones', href: '#previews' },
+      { label: 'Metodología', href: '#methodology' },
       { label: 'Casos de Éxito', href: '#case-studies' },
-      { label: 'Carreras', href: '#' },
-      { label: 'Contacto', href: '#' },
-    ],
-  },
-  {
-    title: 'Recursos',
-    links: [
-      { label: 'Blog', href: '#' },
-      { label: 'Documentación', href: '#' },
-      { label: 'Política de Privacidad', href: '#' },
-      { label: 'Términos de Servicio', href: '#' },
+      { label: 'Contacto', href: '#contact' },
     ],
   },
 ];
@@ -69,7 +52,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-outline-variant/15 pt-8 md:flex-row">
           <p className="font-sans text-xs text-on-surface-muted">
-            © 2025 GattaiTech. Todos los derechos reservados.
+            © 2026 GattaiTech. Todos los derechos reservados.
           </p>
           <div className="flex gap-6">
             <a

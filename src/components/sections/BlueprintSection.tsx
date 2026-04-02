@@ -10,8 +10,8 @@ const methodologySteps = [
   {
     num: '01',
     id: 'step-1',
-    title: 'Descubrimiento y Valor',
-    desc: 'Identificamos el problema real del usuario y definimos un MVP centrado en entregar el máximo ROI desde el día uno.',
+    title: 'Conexión y Claridad',
+    desc: 'Antes de tocar una tecla, nos sumergimos en tu visión. Identificamos qué es lo que realmente hará brillar a tu empresa para asegurar resultados reales desde el primer día.',
     comment: '// STEP 01: VALUE DISCOVERY & MVP',
     code: `async defineMVP(vision: ProductVision): Promise<ValueStream> {
   const userNeeds = await this.research.discover(vision);
@@ -27,8 +27,8 @@ const methodologySteps = [
   {
     num: '02',
     id: 'step-2',
-    title: 'Arquitectura Evolutiva',
-    desc: 'Construimos bases técnicas que abrazan el cambio. Diseñamos para pivotar rápido sin acumular deuda técnica.',
+    title: 'Cimientos para el Futuro',
+    desc: 'Construimos herramientas que no caducan. Diseñamos una estructura digital flexible que se adapta a tus cambios y crece al ritmo de tu negocio sin complicaciones.',
     comment: '// STEP 02: EVOLUTIONARY ARCHITECTURE',
     code: `class CoreEngine implements IAdaptable {
   @Inject(CloudProvider)
@@ -46,8 +46,8 @@ const methodologySteps = [
   {
     num: '03',
     id: 'step-3',
-    title: 'Entrega Continua de Valor',
-    desc: 'Traducimos historias de usuario en software funcional mediante Sprints, garantizando progreso medible y transparencia.',
+    title: 'Resultados en tus Manos',
+    desc: 'Tu idea toma forma pieza por pieza. Te entregamos avances constantes y funcionales para que veas el progreso real de tu proyecto con total transparencia.',
     comment: '// STEP 03: CONTINUOUS VALUE DELIVERY',
     code: `@Cron(ScrumCadence.EVERY_SPRINT)
 async executeSprint(sprintGoal: SprintCycle) {
@@ -64,8 +64,8 @@ async executeSprint(sprintGoal: SprintCycle) {
   {
     num: '04',
     id: 'step-4',
-    title: 'Automatización y Confianza',
-    desc: 'Reducimos el time-to-market automatizando pruebas y despliegues. Llevamos el producto a producción sin fricciones.',
+    title: 'Tranquilidad y Estreno',
+    desc: 'Nos encargamos de que todo sea perfecto. Automatizamos las revisiones para que tu software se lance al mundo de forma segura, impecable y sin errores.',
     comment: '// STEP 04: ZERO-FRICTION DEPLOYMENT',
     code: `pipeline('Gattai-Value-Pipeline')
   .stage('Continuous Integration', async () => {
@@ -80,8 +80,8 @@ async executeSprint(sprintGoal: SprintCycle) {
   {
     num: '05',
     id: 'step-5',
-    title: 'Build, Measure, Learn',
-    desc: 'Lanzamos, analizamos el comportamiento real y usamos esa data para adaptar el backlog y maximizar el impacto.',
+    title: 'Aprendizaje y Evolución',
+    desc: 'Tu éxito es nuestro motor. Una vez lanzado, usamos datos reales para pulir los detalles y asegurar que tu empresa siempre esté un paso adelante de la competencia.',
     comment: '// STEP 05: BUILD, MEASURE, LEARN',
     code: `@OnEvent('increment.released')
 analyzeFeedback(telemetry: UserMetrics) {
@@ -205,7 +205,7 @@ export default function BlueprintSection() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative min-h-screen overflow-hidden bg-[#0d1117] font-sans text-slate-300">
+    <section ref={containerRef} id="methodology" className="relative min-h-screen overflow-hidden bg-[#0d1117] font-sans text-slate-300">
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       <div className="relative z-10 mx-auto flex h-full min-h-screen max-w-7xl flex-col px-6 py-20 lg:flex-row lg:px-8 lg:py-0">

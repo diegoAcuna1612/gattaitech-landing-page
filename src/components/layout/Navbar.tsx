@@ -2,10 +2,10 @@ import { useState } from 'react';
 import Button from '../ui/Button';
 
 const navLinks = [
-  { label: 'Capacidades', href: '#properties' },
-  { label: 'Prototipos', href: '#previews' },
+  { label: 'Soluciones', href: '#previews' },
+  { label: 'Metodología', href: '#methodology' },
   { label: 'Casos de Éxito', href: '#case-studies' },
-  { label: 'Perspectivas', href: '#insights' },
+  { label: 'Contacto', href: '#contact' },
 ];
 
 export default function Navbar() {
